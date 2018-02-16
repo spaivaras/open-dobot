@@ -20,25 +20,29 @@ RAMPS version routines.
 #include "../main/misc/calibrator.h"
 #include "../main/misc/queue.h"
 
-#define X_STEP_PIN         PORTF0
-#define X_STEP_PORT        PORTF
-#define X_STEP_DDR         DDRF
-#define X_DIR_PIN          PORTF1
-#define X_DIR_PORT         PORTF
-#define X_DIR_DDR          DDRF
-#define X_ENABLE_PIN       PORTD7
-#define X_ENABLE_PORT      PORTD
-#define X_ENABLE_DDR       DDRD
+#define X_STEP_PIN         PORTB3
+#define X_STEP_PORT        PORTB
+#define X_STEP_DDR         DDRB
 
-#define Y_STEP_PIN         PORTF6
-#define Y_STEP_PORT        PORTF
-#define Y_STEP_DDR         DDRF
-#define Y_DIR_PIN          PORTF7
-#define Y_DIR_PORT         PORTF
-#define Y_DIR_DDR          DDRF
-#define Y_ENABLE_PIN       PORTF2
-#define Y_ENABLE_PORT      PORTF
-#define Y_ENABLE_DDR       DDRF
+#define X_DIR_PIN          PORTB4
+#define X_DIR_PORT         PORTB
+#define X_DIR_DDR          DDRB
+
+#define X_ENABLE_PIN       PORTB2
+#define X_ENABLE_PORT      PORTB
+#define X_ENABLE_DDR       DDRB
+
+#define Y_STEP_PIN         PORTB0
+#define Y_STEP_PORT        PORTB
+#define Y_STEP_DDR         DDRB
+
+#define Y_DIR_PIN          PORTB1
+#define Y_DIR_PORT         PORTB
+#define Y_DIR_DDR          DDRB
+
+#define Y_ENABLE_PIN       PORTD7
+#define Y_ENABLE_PORT      PORTD
+#define Y_ENABLE_DDR       DDRD
 
 // #define Z_STEP_PIN         PORTL3
 // #define Z_STEP_PORT        PORTL
@@ -48,35 +52,37 @@ RAMPS version routines.
 
 // Use E0 instead of Z as it is not easy to connect dobot to Z.
 // Left named as Z to avoif renaming.
-#define Z_STEP_PIN         PORTA4
-#define Z_STEP_PORT        PORTA
-#define Z_STEP_DDR         DDRA
-#define Z_DIR_PIN          PORTA6
-#define Z_DIR_PORT         PORTA
-#define Z_DIR_DDR          DDRA
-#define Z_ENABLE_PIN       PORTA2
-#define Z_ENABLE_PORT      PORTA
-#define Z_ENABLE_DDR       DDRA
+#define Z_STEP_PIN         PORTD5
+#define Z_STEP_PORT        PORTD
+#define Z_STEP_DDR         DDRD
 
-#define LASER_PIN PORTB4
-#define LASER_PORT PORTB
-#define LASER_DDR DDRB
+#define Z_DIR_PIN          PORTD6
+#define Z_DIR_PORT         PORTD
+#define Z_DIR_DDR          DDRD
 
-#define PUMP_PIN PORTH5
-#define PUMP_PORT PORTH
-#define PUMP_DDR DDRH
+#define Z_ENABLE_PIN       PORTD4
+#define Z_ENABLE_PORT      PORTD
+#define Z_ENABLE_DDR       DDRD
 
-#define VALVE_PIN PORTH6
-#define VALVE_PORT PORTH
-#define VALVE_DDR DDRH
+#define LASER_PIN PORTD3
+#define LASER_PORT PORTD
+#define LASER_DDR DDRD
 
-#define TOOL_ROT_PIN PORTH3
-#define TOOL_ROT_DDR DDRH
-#define TOOL_ROT_PWM OCR4A
+#define PUMP_PIN PORTD2
+#define PUMP_PORT PORTD
+#define PUMP_DDR DDRD
 
-#define GRIPPER_PIN PORTE3
-#define GRIPPER_DDR DDRE
-#define GRIPPER_PWM OCR3A
+#define VALVE_PIN PORTB5
+#define VALVE_PORT PORTB
+#define VALVE_DDR DDRB
+
+#define TOOL_ROT_PIN 0 //PORTH3
+#define TOOL_ROT_DDR 0 //DDRH
+#define TOOL_ROT_PWM 0 //OCR4A
+
+#define GRIPPER_PIN 0 //PORTE3
+#define GRIPPER_DDR 0 //DDRE
+#define GRIPPER_PWM 0 //OCR3A
 
 // At 50kHz how many ticks pass between TIMER5_COMPA_vect ISR calls.
 #define TICKS_PER_CALL 40

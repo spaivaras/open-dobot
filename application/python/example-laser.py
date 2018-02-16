@@ -11,7 +11,7 @@ from dobot import Dobot
 import time
 
 # dobot = Dobot('COM4', debug=True)
-dobot = Dobot('/dev/tty.usbmodem1421', debug=True)
+dobot = Dobot('/dev/ttyUSB0', debug=True)
 
 # Enable calibration routine if you have a limit switch/photointerrupter installed on the arm.
 # See example-switch.py for details.

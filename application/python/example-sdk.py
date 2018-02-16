@@ -25,13 +25,13 @@ up = 50
 # The bottom Z to go to.
 down = 50
 # Maximum speed in mm/s
-speed = 400
+speed = 1600
 # Acceleration in mm/s^2
-acceleration = 300
+acceleration = 1000
 
 # dobot = Dobot('/dev/tty.usbmodem1421', debug=True, fake=True)
 # dobot = Dobot('COM4', debug=True)
-dobot = Dobot('/dev/tty.usbmodem1421', debug=True)
+dobot = Dobot('/dev/ttyUSB0', debug=True)
 
 # Enable calibration routine if you have a limit switch/photointerrupter installed on the arm.
 # See example-switch.py for details.

@@ -29,98 +29,10 @@ volatile uint ticksZ;
 volatile int ticksLeftX;
 volatile int ticksLeftY;
 volatile int ticksLeftZ;
+volatile unsigned int t50 = 0;
 
 SwitchPort calibrationPins[] = {
-  {
-    // D16 - reference 0
-    &PINH,
-    PH1,
-    &DDRH
-  },
-  {
-    // D17 - reference 1
-    &PINH,
-    PH0,
-    &DDRH
-  },
-  {
-    // D25 - reference 2
-    &PINA,
-    PA3,
-    &DDRA
-  },
-  {
-    // D27 - reference 3
-    &PINA,
-    PA5,
-    &DDRA
-  },
-  {
-    // D29 - reference 4
-    &PINA,
-    PA7,
-    &DDRA
-  },
-  {
-    // D31 - reference 5
-    &PINC,
-    PC6,
-    &DDRC
-  },
-  {
-    // D33 - reference 6
-    &PINC,
-    PC4,
-    &DDRC
-  },
-  {
-    // D35 - reference 7
-    &PINC,
-    PC2,
-    &DDRC
-  },
-  {
-    // D37 - reference 8
-    &PINC,
-    PC0,
-    &DDRC
-  },
-  {
-    // D39 - reference 9
-    &PING,
-    PG2,
-    &DDRG
-  },
-  {
-    // D41 - reference 10
-    &PING,
-    PG0,
-    &DDRG
-  },
-  {
-    // D43 - reference 11
-    &PINL,
-    PL6,
-    &DDRL
-  },
-  {
-    // D45 - reference 12
-    &PINL,
-    PL4,
-    &DDRL
-  },
-  {
-    // D47 - reference 13
-    &PINL,
-    PL2,
-    &DDRL
-  },
-  {
-    // D32 - reference 14
-    &PINC,
-    PC5,
-    &DDRC
-  }
+
 };
 
 byte calibrationPinsNumber() {
@@ -172,31 +84,31 @@ void setupAccels() {
   // The approach seems to be working reliably when there is no interference from motors.
   // See wiki on how to suppress interference.
   byte i = 5;
-  while (i--) {
-    mpu6050_deinit();
-    _delay_ms(5);
-    mpu6050_init(MPU6050_ADDR0);
-    _delay_ms(5);
-    mpu6050_init(MPU6050_ADDR1);
-    _delay_ms(5);
-    if (mpu6050_testConnection(MPU6050_ADDR0) && mpu6050_testConnection(MPU6050_ADDR1)) {
-      break;
-    }
-  }
+//  while (i--) {
+//    mpu6050_deinit();
+//    _delay_ms(5);
+//    mpu6050_init(MPU6050_ADDR0);
+//    _delay_ms(5);
+//    mpu6050_init(MPU6050_ADDR1);
+//    _delay_ms(5);
+//    if (mpu6050_testConnection(MPU6050_ADDR0) && mpu6050_testConnection(MPU6050_ADDR1)) {
+//      break;
+//    }
+//  }
 }
 
 void accelRead(byte unit, int *x, int *y, int *z) {
   int ax, ay, az;
-  byte ret = 1;
-  while (ret) {
-    ret = mpu6050_getRawAccels(unit, &ax, &ay, &az);
-    if (ret) {
-      setupAccels();
-    }
-  }
-  *x = ax;
-  *y = ay;
-  *z = az;
+  byte ret = 0;
+//  while (ret) {
+//    ret = mpu6050_getRawAccels(unit, &ax, &ay, &az);
+//    if (ret) {
+//      setupAccels();
+//    }
+//  }
+  *x = 1;
+  *y = 2;
+  *z = 3;
 }
 
 void updateAccels() {
@@ -205,35 +117,35 @@ void updateAccels() {
 }
 
 inline void setupPwm() {
-  // Setup Gripper servo.
-  // Set scaler to 1/8 FCPU_FREQ.
-  TCCR3B |= (1<< CS31);
-  // Set mode 14 (ICR3 defines TOP).
-  TCCR3A |= (1<< WGM31);
-  TCCR3B |= (1<< WGM32) | (1<< WGM33);
-  // Set TOP to 50Hz at 1/8 FCPU_FREQ.
-  ICR3 = 40000;
-  // Fast PWM. Clear OCnA/OCnB/OCnC on compare match, clear OCnA/OCnB/OCnC at BOTTOM (inverting mode).
-  TCCR3A |= (1<< COM3A1);
-  // Set initial gripper state to 480 (480 * 2 + 2000).
-  GRIPPER_PWM = 2960;
-  // Enable pin.
-  GRIPPER_DDR |= (1<< GRIPPER_PIN);
-
-  // Setup ToolRotation servo.
-  // Set scaler to 1/8 FCPU_FREQ.
-  TCCR4B |= (1<< CS41);
-  // Set mode 14 (ICR3 defines TOP).
-  TCCR4A |= (1<< WGM41);
-  TCCR4B |= (1<< WGM42) | (1<< WGM43);
-  // Set TOP to 50Hz at 1/8 FCPU_FREQ.
-  ICR4 = 40000;
-  // Fast PWM. Clear OCnA/OCnB/OCnC on compare match, clear OCnA/OCnB/OCnC at BOTTOM (inverting mode).
-  TCCR4A |= (1<< COM4A1);
-  // Set initial tool state to 500 (500 * 2 + 2000).
-  TOOL_ROT_PWM = 3000;
-  // Enable pin.
-  TOOL_ROT_DDR |= (1<< TOOL_ROT_PIN);
+//  // Setup Gripper servo.
+//  // Set scaler to 1/8 FCPU_FREQ.
+//  TCCR3B |= (1<< CS31);
+//  // Set mode 14 (ICR3 defines TOP).
+//  TCCR3A |= (1<< WGM31);
+//  TCCR3B |= (1<< WGM32) | (1<< WGM33);
+//  // Set TOP to 50Hz at 1/8 FCPU_FREQ.
+//  ICR3 = 40000;
+//  // Fast PWM. Clear OCnA/OCnB/OCnC on compare match, clear OCnA/OCnB/OCnC at BOTTOM (inverting mode).
+//  TCCR3A |= (1<< COM3A1);
+//  // Set initial gripper state to 480 (480 * 2 + 2000).
+//  GRIPPER_PWM = 2960;
+//  // Enable pin.
+//  GRIPPER_DDR |= (1<< GRIPPER_PIN);
+//
+//  // Setup ToolRotation servo.
+//  // Set scaler to 1/8 FCPU_FREQ.
+//  TCCR4B |= (1<< CS41);
+//  // Set mode 14 (ICR3 defines TOP).
+//  TCCR4A |= (1<< WGM41);
+//  TCCR4B |= (1<< WGM42) | (1<< WGM43);
+//  // Set TOP to 50Hz at 1/8 FCPU_FREQ.
+//  ICR4 = 40000;
+//  // Fast PWM. Clear OCnA/OCnB/OCnC on compare match, clear OCnA/OCnB/OCnC at BOTTOM (inverting mode).
+//  TCCR4A |= (1<< COM4A1);
+//  // Set initial tool state to 500 (500 * 2 + 2000).
+//  TOOL_ROT_PWM = 3000;
+//  // Enable pin.
+//  TOOL_ROT_DDR |= (1<< TOOL_ROT_PIN);
 }
 
 void setupBoard() {
@@ -266,25 +178,25 @@ void setupBoard() {
    * Set up TIMER1_COMPA_vect ISR to execute commands.
    */
   // Turn on Timer1 with 1/256 prescaler (62.5kHz) for command interrupts.
-  TCCR1B |= (1 << CS12);
+  TCCR0B |= (1 << CS02);
   // Set compare match register on Timer1 to form 50Hz
-  OCR1A = 1250;
+  OCR0A = 250;
   // Turn on CTC mode.
-  TCCR1B |= (1 << WGM12);
+  TCCR0A |= (1 << WGM01);
   // Enable timer compare interrupt.
-  TIMSK1 |= (1 << OCIE1A);
+  TIMSK0 |= (1 << OCIE0A);
 
   /**
    * Set up TIMER5_COMPA_vect ISR to toggle pins.
    */
   // Configure Timer5 to CTC mode.
-  TCCR5B |= (1 << WGM52);
+  TCCR1B |= (1 << WGM12);
   // Start Timer5 at Fcpu/1 (16MHz)
-  TCCR5B |= (1 << CS50);
+  TCCR1B |= (1 << CS10);
   // Set compare match register on Timer1 to form 50kHz
-  OCR5A = 320;
+  OCR1A = 320;
   // Enable timer compare interrupt (for stepping).
-  TIMSK5 |= (1 << OCIE5A);
+  TIMSK1 |= (1 << OCIE1A);
 
   // Inable interrupts to execute timer ISRs.
   sei();
@@ -337,14 +249,21 @@ inline void move(Command* command) {
       motorPositionFore += stepsZ;
     }
   }
-  GRIPPER_PWM = command->servoGrab;
-  TOOL_ROT_PWM = command->servoRot;
+  //GRIPPER_PWM = command->servoGrab;
+  //TOOL_ROT_PWM = command->servoRot;
 }
 
 // Timer1 compare match Interrupt Service Routine.
 // Executes commands at 50Hz.
-ISR(TIMER1_COMPA_vect)
+ISR(TIMER0_COMPA_vect)
 {
+	if (t50 < 4) {
+		t50++;
+		return;
+	}
+
+	t50 = 0;
+
   // Reset pins.
   X_STEP_PORT &= ~(1 << X_STEP_PIN);
   Y_STEP_PORT &= ~(1 << Y_STEP_PIN);
@@ -386,7 +305,7 @@ ISR(TIMER1_COMPA_vect)
 
 // Timer5 compare match Interrupt Service Routine.
 // Toggles pins at maximum 20kHz.
-ISR(TIMER5_COMPA_vect)
+ISR(TIMER1_COMPA_vect)
 {
   if (stepsX) {
     ticksLeftX -= TICKS_PER_CALL;

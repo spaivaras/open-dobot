@@ -21,9 +21,9 @@ License: MIT
 
 #define NOP __asm__ __volatile__ ("nop\n\t")
 
-#define CMD_QUEUE_SIZE 100
+#define CMD_QUEUE_SIZE 10
 
-#define BLUETOOTH_ENABLED (PINL & (1<<PORTL1))
+#define BLUETOOTH_ENABLED false
 
 // DO NOT FORGET TO UPDATE cmdArray SIZE!
 #define CMD_READY 0
